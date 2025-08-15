@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Disease Predictor</title>
+    <style>
+        body {
+            background: #f0f4fa;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: 40px auto;
+            padding: 20px 35px;
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 4px 20px rgba(100, 100, 120, 0.12);
+        }
+
+        h1 {
+            color: #2b4c7e;
+            text-align: center;
+            margin-bottom: 26px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #233555;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .symptom-list {
+            margin: 20px 0;
+            max-height: 250px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 12px;
+            border-radius: 7px;
+            background: #fafbfc;
+            /* Grid styling for symptoms */
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 6px 18px;
+        }
+
+        .symptom-list div {
+            margin-bottom: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .symptom-list input[type="checkbox"] {
+            margin-right: 8px;
+        }
+
+        .custom-symptom-input {
+            display: flex;
+            gap: 10px;
+            margin-top: 16px;
+            margin-bottom: 5px;
+        }
+
+        .custom-symptom-input input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .custom-symptom-input button {
+            padding: 8px 14px;
+            background: #2b4c7e;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: 500;
+            cursor: pointer;
+            box-shadow: 0 1px 2px rgba(44, 65, 95, 0.07);
+        }
+
+        .custom-symptom-input button:hover {
+            background: #1a305c;
+        }
+
+        .added-symptoms {
+            margin-top: 8px;
+            min-height: 24px;
+        }
+
+        .symptom-badge {
+            background: #dff0d8;
+            color: #34754e;
+            padding: 6px 11px;
+            border-radius: 15px;
+            margin: 5px 5px 5px 0;
+            display: inline-block;
+            cursor: pointer;
+            font-size: 1em;
+            border: 1px solid #cabece;
+            transition: background 0.18s;
+        }
+
+        .symptom-badge:hover {
+            background: #c8e5bc;
+            color: #21422b;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 13px;
+            background: #2b4c7e;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.05rem;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background .2s;
+            margin-top: 20px;
+        }
+
+        button[type="submit"]:hover {
+            background: #1a305c;
+        }
+
+        #result {
+            margin-top: 28px;
+            font-size: 1.24em;
+            text-align: center;
+            color: #259342;
+            padding: 12px 0;
+            background: #f6fcf7;
+            border-radius: 8px;
+            min-height: 34px;
+            box-shadow: 0 2px 5px rgba(51, 175, 101, 0.05);
+        }
+        /* Mic button styling */
+        #mic-btn {
+            background: #2b4c7e;
+            border: none;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            transition: background 0.2s;
+        }
+        #mic-btn:hover {
+            background: #1a305c;
+        }
+        #mic-icon {
+            margin-right: 6px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Disease Prediction Based on Symptoms</h1>
+        <form id="symptom-form">
+            <label>Select Symptoms:</label>
+            <div class="symptom-list">
+                {% for symptom in symptom_list %}
+                <div>
+                    <input type="checkbox" name="symptoms" value="{{ symptom }}">
+                    <label>{{ symptom.replace('_',' ').capitalize() }}</label>
+                </div>
+                {% endfor %}
+            </div>
+            <hr style="margin: 18px 0;">
+            <label for="custom-symptom">Add Custom Symptom:</label>
+            <div class="custom-symptom-input">
+                <input type="text" id="custom-symptom" placeholder="Type a symptom and click Add">
+                <button type="button" id="add-symptom">Add</button>
+                <!-- Mic button -->
+                <button type="button" id="mic-btn" title="Speak symptom">
+                    <span id="mic-icon">🎤</span> Speak
+                </button>
+            </div>
+            <div class="added-symptoms" id="added-symptoms"></div>
+            <button type="submit">Predict Disease</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const addedSymptomsContainer = document.getElementById('added-symptoms');
+        const addSymptomBtn = document.getElementById('add-symptom');
+        const micBtn = document.getElementById('mic-btn');
+        const symptomInput = document.getElementById('custom-symptom');
+
+        addSymptomBtn.addEventListener('click', () => {
+            let newSymptom = symptomInput.value.trim();
+            if (newSymptom) {
+                addSymptom(newSymptom);
+                symptomInput.value = '';
+            }
+        });
+
+        function addSymptom(symptom) {
+            // Prevent duplicate symptoms
+            const existingBadges = [...document.querySelectorAll('.symptom-badge')];
+            if (existingBadges.some(badge => badge.textContent.toLowerCase() === symptom.toLowerCase())) {
+                return; // already added
+            }
+
+            let badge = document.createElement('span');
+            badge.className = 'symptom-badge';
+            badge.textContent = symptom;
+            badge.title = "Click to remove";
+
+            badge.addEventListener('click', () => {
+                badge.remove();
+                hiddenInput.remove();
+            });
+            let hiddenInput = document.createElement('input');
+            hiddenInput.type = 'hidden';
+            hiddenInput.name = 'symptoms';
+            hiddenInput.value = symptom;
+
+            addedSymptomsContainer.appendChild(badge);
+            addedSymptomsContainer.appendChild(hiddenInput);
+        }
+
+        micBtn.addEventListener('click', () => {
+            if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
+                alert('Speech recognition not supported in this browser.');
+                return;
+            }
+
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'en-US';
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            recognition.start();
+
+            micBtn.textContent = 'Listening...';
+
+            recognition.onresult = (event) => {
+                const speechResult = event.results[0][0].transcript;
+                addSymptom(speechResult);
+                micBtn.textContent = '🎤 Speak';
+            }
+
+            recognition.onerror = (event) => {
+                alert('Error occurred in speech recognition: ' + event.error);
+                micBtn.textContent = '🎤 Speak';
+            }
+
+            recognition.onend = () => {
+                micBtn.textContent = '🎤 Speak';
+            }
+        });
+
+        document.getElementById('symptom-form').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const checkedBoxes = document.querySelectorAll('input[name="symptoms"]:checked, input[name="symptoms"][type="hidden"]');
+            const symptoms = Array.from(checkedBoxes).map(cb => cb.value);
+            const response = await fetch('/predict', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ symptoms })
+            });
+            const result = await response.json();
+            let diseaseName = result.disease;
+            if (typeof diseaseName === 'string') {
+                diseaseName = diseaseName.replace(/[\[\]']+/g, '');
+            }
+            document.getElementById('result').innerHTML =
+                `<span>Predicted Disease: <b>${diseaseName}</b></span>`;
+        });
+    </script>
+</body>
+</html>
