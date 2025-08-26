@@ -169,6 +169,3 @@ For issues, feature requests, or questions:
 "To keep the body in good health is a duty… otherwise we shall not be able to keep our mind strong and clear."
 — Buddha
 ***
-
-<img width="1919" height="1077" alt="Screenshot 2025-08-15 132438" src="https://github.com/user-attachments/assets/032444ba-8ffd-41ea-8b01-50ab1160bdbb" />
-<img width="1919" height="1079" alt="Screenshot 2025-08-15 132505" src="https://github.com/user-attachments/assets/3cc68cb8-2746-42a5-b7c2-ffce2d78ca30" />
