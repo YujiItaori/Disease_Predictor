@@ -10,6 +10,13 @@
 <body>
     <div class="container">
         <h1>Disease Prediction Based on Symptoms</h1>
+
+        <label for="model-select">Choose Dataset/Model:</label>
+        <select id="model-select" name="model">
+            <option value="old">Old MOdel</option>
+            <option value="new">New Model</option>
+        </select>
+
         <form id="symptom-form">
             <label>Select Symptoms:</label>
             <div class="symptom-list">
@@ -25,7 +32,6 @@
             <div class="custom-symptom-input">
                 <input type="text" id="custom-symptom" placeholder="Type a symptom and click Add">
                 <button type="button" id="add-symptom">Add</button>
-                <!-- Mic button -->
                 <button type="button" id="mic-btn" title="Speak symptom">
                     <span id="mic-icon">🎤</span> Speak
                 </button>
@@ -35,7 +41,7 @@
         </form>
         <div id="result"></div>
     </div>
-
-    <script type="module" src="/Static/script.js"></script>
+    <script src="/static/script.js"></script>
 </body>
+
 </html>
