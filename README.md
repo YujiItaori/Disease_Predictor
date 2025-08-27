@@ -1,7 +1,3 @@
-Here's the updated README to reflect your current project setup with support for two models (old and new) and related workflow:
-
-***
-
 # 🩺 Disease Predictor Web App
 
 An AI-powered web application that predicts the most probable disease based on user-input symptoms. Combines classic machine learning with a modern Flask web interface, allowing users to select, type, or speak symptoms for real-time disease diagnosis and insight.
@@ -18,12 +14,12 @@ An AI-powered web application that predicts the most probable disease based on u
 
 ## 🎯 Supported Use Cases
 
-| Use Case                     | Flow                                                            |
-|------------------------------|-----------------------------------------------------------------|
-| 🧑⚕️ Pre-screening           | Enter symptoms to get probable diseases for further investigation|
-| 🏥 Patient Triage            | Rapid suggestion for medical staff or self-diagnosis            |
-| 📝 Health Education          | Explore disease possibilities based on clinical presentations   |
-| 🤖 AI Demonstration          | Show ML, NLP, and browser-tech integration for interviews/fairs |
+| Use Case                  | Flow                                                           |
+|---------------------------|----------------------------------------------------------------|
+| 🧑⚕️ Pre-screening         | Enter symptoms to get probable diseases for further investigation |
+| 🏥 Patient Triage          | Rapid suggestion for medical staff or self-diagnosis           |
+| 📝 Health Education        | Explore disease possibilities based on clinical presentations  |
+| 🤖 AI Demonstration        | Show ML, NLP, and browser-tech integration for interviews/fairs|
 
 ## 🛠️ Installation
 
@@ -39,44 +35,42 @@ An AI-powered web application that predicts the most probable disease based on u
 
 1. **Install required dependencies**
 
-```bash
+```
 pip install -r requirements.txt
 ```
 
 2. **Train the models and save artifacts**
 
-- Run training notebooks/scripts for both your old and new datasets to generate model files in
+Run training notebooks/scripts for both your old and new datasets to generate model files in:
 
 ```
 Training/old/
 Training/new/
 ```
 
-📁 Dataset Information and Usage
-Due to the large size of the main dataset file "Disease and symptoms dataset.csv" (~182 MB), it is not included in this repository to keep the repo lightweight and manageable.
+3. **Dataset Information and Usage**
 
-The dataset is publicly available for download at Mendeley Data:
-https://data.mendeley.com/datasets/2cxccsxydc/1
+Due to the large size of the main dataset file **"Disease and symptoms dataset.csv" (~182 MB)**, it is **not included** in this repository to keep the repo lightweight and manageable.
 
-Why not include the dataset directly?
-GitHub enforces a hard file size limit of 100 MB per file.
+The dataset is publicly available for download at Mendeley Data:  
+[https://data.mendeley.com/datasets/2cxccsxydc/1](https://data.mendeley.com/datasets/2cxccsxydc/1)
 
-Large files slow down cloning, reduce repository performance, and bloat repository size.
+#### Why not include the dataset directly?
 
-Best practice is to keep large datasets separate and reference them externally.
+- GitHub enforces a hard file size limit of 100 MB per file.
+- Large files slow down cloning, reduce repository performance, and bloat repository size.
+- Best practice is to keep large datasets separate and reference them externally.
+- This approach avoids repository size bloat and makes collaboration easier.
 
-This approach avoids repository size bloat and makes collaboration easier.
+#### How to use the dataset?
 
-How to use the dataset?
-Download the dataset manually from the provided Mendeley link.
+1. Download the dataset manually from the provided Mendeley link.
+2. Place the CSV file in the **`Training/`** directory locally.
+3. Run the training notebook (`training.ipynb`) to generate the model and related artifacts.
 
-Place the CSV file in the Training/ directory locally.
+4. **Start the web app**
 
-Run the training notebook (training.ipynb) to generate the model and related artifacts.
-
-3. **Start the web app**
-
-```bash
+```
 python app.py
 ```
 
@@ -99,7 +93,7 @@ Sympton_Disease/
 │   │   ├── model.pkl           # New model pickle file
 │   │   ├── symptoms.pkl        # New symptom vocabulary pickle
 │   │   └── label_encoder.pkl   # New label encoder pickle
-│   ├── Disease and symptoms dataset.csv  # New dataset CSV file
+│   ├── Disease and symptoms dataset.csv  # New dataset CSV file (download externally)
 │   ├── DiseaseAndSymptoms.csv            # Another dataset CSV file
 │   ├── training.ipynb                    # Training notebook for old model
 │   └── disease.ipynb                     # Training notebook for new model
@@ -118,7 +112,7 @@ Sympton_Disease/
 
 ### Example
 
-```text
+```
 Symptoms: ['skin rash', 'itching', 'fever']
 Model: New Dataset
 Predicted Disease: Measles
@@ -170,13 +164,11 @@ For issues or suggestions:
 - Open [GitHub Issues](https://github.com/YujiItaori/Disease_Predictor/issues)  
 - Contact [YujiItaori](https://github.com/YujiItaori)
 
-***
+---
 
 **Empowering fast, smart disease prediction for everyone. 🩺🤖**
 
 ⭐ Star this repo if it helps!  
 *"To keep the body in good health is a duty… otherwise we shall not be able to keep our mind strong and clear."* — Buddha
 
-***
-
-Let me know if you want me to help format or extend this further!
+---
