@@ -1,4 +1,4 @@
- body {
+body {
             background: #f0f4fa;
             font-family: Arial, sans-serif;
         }
@@ -130,6 +130,7 @@
             min-height: 34px;
             box-shadow: 0 2px 5px rgba(51, 175, 101, 0.05);
         }
+
         /* Mic button styling */
         #mic-btn {
             background: #2b4c7e;
@@ -144,9 +145,11 @@
             align-items: center;
             transition: background 0.2s;
         }
+
         #mic-btn:hover {
             background: #1a305c;
         }
+
         #mic-icon {
             margin-right: 6px;
         }
