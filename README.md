@@ -52,6 +52,28 @@ Training/old/
 Training/new/
 ```
 
+📁 Dataset Information and Usage
+Due to the large size of the main dataset file "Disease and symptoms dataset.csv" (~182 MB), it is not included in this repository to keep the repo lightweight and manageable.
+
+The dataset is publicly available for download at Mendeley Data:
+https://data.mendeley.com/datasets/2cxccsxydc/1
+
+Why not include the dataset directly?
+GitHub enforces a hard file size limit of 100 MB per file.
+
+Large files slow down cloning, reduce repository performance, and bloat repository size.
+
+Best practice is to keep large datasets separate and reference them externally.
+
+This approach avoids repository size bloat and makes collaboration easier.
+
+How to use the dataset?
+Download the dataset manually from the provided Mendeley link.
+
+Place the CSV file in the Training/ directory locally.
+
+Run the training notebook (training.ipynb) to generate the model and related artifacts.
+
 3. **Start the web app**
 
 ```bash
